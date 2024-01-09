@@ -1,51 +1,10 @@
-//https://leetcode.com/problems/path-sum/
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        // Call the check function to start the recursive traversal
-        return check(root, 0, targetSum);
-    }
+        if (root == null) return false;
 
-    // Recursive function to check if there exists a path with the given sum
-    boolean check(TreeNode node, int sum, int target) {
-        // Base case: if the current node is null, return false
-        if (node == null) {
-            return false;
-        }
+        // for leaf node
+        if (root.left == null && root.right == null) return root.val == targetSum;
 
-        // Add the value of the current node to the current sum
-        sum += node.val;
-
-        // Check if the current node is a leaf and if the sum is equal to the target sum
-        if (node.left == null && node.right == null && sum == target) {
-            return true;
-        }
-
-        // Recursively call check for the left child with the updated sum and target sum
-        if (check(node.left, sum, target)) {
-            return true;
-        }
-
-        // Recursively call check for the right child with the updated sum and target sum
-        if (check(node.right, sum, target)) {
-            return true;
-        }
-
-        // If no path is found, return false
-        return false;
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
     }
 }
