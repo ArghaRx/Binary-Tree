@@ -19,18 +19,28 @@
  */
 class Solution {
     public int findTilt(TreeNode root) {
+        // Base case: If the current node is null, return 0.
         if(root == null) return 0;
+
+
         int leftsum = sum(root.left);
         int rightsum = sum(root.right);
         int substract = Math.abs(leftsum - rightsum);
         root.val = substract;
+
+        //Recursively Find Tilt for Subtrees:
+// findTilt(root.left);: Recursively find the tilt of the left subtree.
+///  findTilt(root.right);: Recursively find the tilt of the right subtree.
         findTilt(root.left);
         findTilt(root.right);
+
+        //Combine the tilt of the current subtree (stored in root.val) with the updated sums of its left and right subtrees, and return the total tilt.
         return (root.val + sum(root.left) + sum(root.right));     
     }
     public int sum(TreeNode root)
     {
         if(root == null) return 0;
+        //Return the sum of the current node's value, the sum of its left subtree, and the sum of its right subtree.
         return root.val + sum(root.left) + sum(root.right);
     }
 }
